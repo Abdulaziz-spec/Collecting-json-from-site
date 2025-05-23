@@ -1,0 +1,96 @@
+CREATE TABLE animals(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT
+
+);
+
+-- Запрос на добавление данных в таблицу
+INSERT INTO animals(name) VALUES ('Cat');
+
+-- Запрос на получение
+SELECT name FROM animals;
+
+
+INSERT INTO animals(name) VALUES ('Rat'), ('Dog'), ('Wolf');
+
+SELECT * FROM animals;
+
+-- Запрос на удаление
+DELETE FROM animals; -- удаление всех данных
+
+
+DELETE FROM animals WHERE id = 2;
+
+
+INSERT INTO animals(name) VALUES ('Fox');
+
+SELECT * FROM animals WHERE LENGTH(name) = 3;
+
+
+SELECT * FROM animals ORDER BY name DESC LIMIT 2;
+
+
+
+
+-- Создать таблицу books со столбцами id, book_name, author и добавить 2 книги с авттором и вывести 
+
+CREATE TABLE books(
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     book_name TEXT,
+     author TEXT
+);
+
+INSERT INTO books(book_name, author) VALUES 
+('Война и Мир', 'Толстой'), ('Harry Potter', 'Joan Rouling');
+
+SELECT * FROM books; 
+
+DROP TABLE books; -- Запрос на удаление таблицы
+
+
+
+ALTER TABLE books  --Запрос на добавление колонки в таблицу
+ADD column year INTEGER;
+
+
+UPDATE books  -- Изменили и добавливи значение
+SET year = 1867 WHERE id = 1;
+
+
+
+-- Один ко многим
+DROP TABLE IF EXISTS courses;
+
+CREATE TABLE IF NOT EXISTS courses(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    course_name TEXT UNIQUE
+); 
+
+INSERT INTO courses(course_name) VALUES
+('Python'), ('Frontend'), ('3D Max');
+
+SELECT * FROM courses;
+
+
+CREATE TABLE IF NOT EXISTS students(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    student_name TEXT,
+    age INTEGER,
+    course_id INTEGER REFERENCES courses(id)
+);
+
+
+INSERT INTO students(student_name, age, course_id) VALUES
+('Andrey', 15, 3),
+('Muslima', 18, 1),
+('Timur', 29, 2),
+('Meirjan', 17, 1),
+('Nursultan', 18, 2),
+('Albert', 16, 1),
+('Shahrizoda', 15, 3);
+
+SELECT * FROM students;
+
+
+SELECT student_name ,age, course_name FROM students
+JOIN courses ON courses.id = students.course_id;
